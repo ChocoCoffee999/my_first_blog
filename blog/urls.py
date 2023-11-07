@@ -1,15 +1,13 @@
 from django.urls import path, include
 from . import views
 from rest_framework import routers
-
 router = routers.DefaultRouter()
 router.register('Post', views.IntruderImage)
-
 urlpatterns = [
 	path('', views.post_list, name='post_list'),
 	path('api_root/', include(router.urls)),
 	path('post/<int:pk>/', views.post_detail, name='post_detail'),
 	path('post/new', views.post_new, name='post_new'),
 	path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
-	path('get/data', views.get_queryset, name='get_queryset'),
+	path('get/data', views.PostListView.as_view(), name='filtered_post_list'),
 ]
