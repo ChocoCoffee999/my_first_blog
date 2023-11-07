@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.http import HttpResponseNotFound
 from blog.models import Post
 from .forms import PostForm
 from rest_framework import viewsets
@@ -52,3 +53,9 @@ class IntruderImage(viewsets.ModelViewSet):
 	authentication_classes = [TokenAuthentication]
 	def perform_create(self, serializer):
 		serializer.save(author = self.request.user)
+
+def get_queryset(self):
+	create_after = self.request.query_params.get('create_after')
+	if created_after:
+		return Post.objects.filter(published_data__gt = create_after)
+	return HttpResponseNotFound("No search files")
